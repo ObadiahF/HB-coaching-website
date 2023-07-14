@@ -1149,7 +1149,7 @@ var app = (function () {
     			div2 = element("div");
     			div0 = element("div");
     			h1 = element("h1");
-    			h1.textContent = "Free Resources";
+    			h1.textContent = "Resources";
     			t1 = space();
     			div1 = element("div");
     			iframe0 = element("iframe");
@@ -1157,9 +1157,9 @@ var app = (function () {
     			iframe1 = element("iframe");
     			t3 = space();
     			iframe2 = element("iframe");
-    			attr_dev(h1, "class", "svelte-14lf6rv");
+    			attr_dev(h1, "class", "svelte-1qzg6vn");
     			add_location(h1, file$4, 6, 8, 77);
-    			attr_dev(div0, "class", "title svelte-14lf6rv");
+    			attr_dev(div0, "class", "title svelte-1qzg6vn");
     			add_location(div0, file$4, 5, 4, 49);
     			attr_dev(iframe0, "width", "560");
     			attr_dev(iframe0, "height", "315");
@@ -1168,8 +1168,8 @@ var app = (function () {
     			attr_dev(iframe0, "frameborder", "0");
     			attr_dev(iframe0, "allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
     			iframe0.allowFullscreen = true;
-    			attr_dev(iframe0, "class", "svelte-14lf6rv");
-    			add_location(iframe0, file$4, 9, 8, 155);
+    			attr_dev(iframe0, "class", "svelte-1qzg6vn");
+    			add_location(iframe0, file$4, 9, 8, 150);
     			attr_dev(iframe1, "width", "560");
     			attr_dev(iframe1, "height", "315");
     			if (!src_url_equal(iframe1.src, iframe1_src_value = "https://www.youtube.com/embed/jLg9kdVUwoE")) attr_dev(iframe1, "src", iframe1_src_value);
@@ -1177,8 +1177,8 @@ var app = (function () {
     			attr_dev(iframe1, "frameborder", "0");
     			attr_dev(iframe1, "allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
     			iframe1.allowFullscreen = true;
-    			attr_dev(iframe1, "class", "svelte-14lf6rv");
-    			add_location(iframe1, file$4, 10, 8, 423);
+    			attr_dev(iframe1, "class", "svelte-1qzg6vn");
+    			add_location(iframe1, file$4, 10, 8, 418);
     			attr_dev(iframe2, "width", "560");
     			attr_dev(iframe2, "height", "315");
     			if (!src_url_equal(iframe2.src, iframe2_src_value = "https://www.youtube.com/embed/q3EItdmyf2A")) attr_dev(iframe2, "src", iframe2_src_value);
@@ -1186,11 +1186,11 @@ var app = (function () {
     			attr_dev(iframe2, "frameborder", "0");
     			attr_dev(iframe2, "allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
     			iframe2.allowFullscreen = true;
-    			attr_dev(iframe2, "class", "svelte-14lf6rv");
-    			add_location(iframe2, file$4, 11, 8, 691);
-    			attr_dev(div1, "class", "videos-container svelte-14lf6rv");
-    			add_location(div1, file$4, 8, 4, 116);
-    			attr_dev(div2, "class", "container svelte-14lf6rv");
+    			attr_dev(iframe2, "class", "svelte-1qzg6vn");
+    			add_location(iframe2, file$4, 11, 8, 686);
+    			attr_dev(div1, "class", "videos-container svelte-1qzg6vn");
+    			add_location(div1, file$4, 8, 4, 111);
+    			attr_dev(div2, "class", "container svelte-1qzg6vn");
     			add_location(div2, file$4, 4, 0, 21);
     		},
     		l: function claim(nodes) {
