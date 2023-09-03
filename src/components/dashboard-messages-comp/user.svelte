@@ -45,7 +45,7 @@ style="
 
         <div class="card {current === userInfo.name ? 'active' : ''}">
             <img src="{userInfo.pfpUrl}" alt="profile">
-            <a href="messages/{userInfo.userId}" on:click={() => (current = userInfo.name)}>{userInfo.name}</a>
+            <a href="#" on:click={() => (current = userInfo.name)}>{userInfo.name}</a>
         </div>
 
     {/each}

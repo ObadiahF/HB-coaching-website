@@ -1,3 +1,4 @@
+
 <script>
     import Nav from "../../components/dashboard-components/nav.svelte";
     import { colors } from "../../utils/colors";
@@ -25,6 +26,10 @@ $: {
 let mainBackground, color, activeColor, checkedColor, lineColor = { colors };
 
 </script>
+
+<svelte:head>
+    <script src="https://kit.fontawesome.com/db3c0028dc.js" crossorigin="anonymous"></script>
+</svelte:head>
 
 <body
 style="
