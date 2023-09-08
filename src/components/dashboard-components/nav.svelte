@@ -87,13 +87,13 @@
             <li class="list-items {current === 'Dashboard' ? 'active' : ''}"><a href="/dashboard" on:click={() => (current = 'Dashboard')}><i class="fa-solid fa-grip-vertical nav-icon"></i></a></li>
             <li class="list-items {current === 'Messages' ? 'active' : ''}"><a href="/dashboard/messages" on:click={() => (current = 'Messages')}><i class="fa-solid fa-envelope nav-icon"></i></a></li>
             <li class="list-items {current === 'Schedule' ? 'active' : ''}"><a href="/dashboard/schedule" on:click={() => (current = 'Schedule')}><i class="fa-regular fa-calendar-days nav-icon"></i></a></li>
-            <li class="list-items {current === 'Managment' ? 'active' : ''}"><a href="/dashboard/manage" on:click={() => (current = 'Managment')}><i class="fa-solid fa-users nav-icon"></i></a></li>
+            <li class="list-items {current === 'Management' ? 'active' : ''}"><a href="/dashboard/manage" on:click={() => (current = 'Management')}><i class="fa-solid fa-users nav-icon"></i></a></li>
             <li class="list-items {current === 'Settings' ? 'active' : ''}"><a href="/dashboard/settings" on:click={() => (current = 'Settings')}><i class="fa-solid fa-gear nav-icon"></i></a></li>
             {:else}
             <li class="list-items {current === 'Dashboard' ? 'active' : ''}"><a href="/dashboard" on:click={() => (current = 'Dashboard')}><i class="fa-solid fa-grip-vertical nav-icon"></i>Dashboard</a></li>
             <li class="list-items {current === 'Messages' ? 'active' : ''}"><a href="/dashboard/messages" on:click={() => (current = 'Messages')}><i class="fa-solid fa-envelope nav-icon"></i>Messages</a></li>
             <li class="list-items {current === 'Schedule' ? 'active' : ''}"><a href="/dashboard/schedule" on:click={() => (current = 'Schedule')}><i class="fa-regular fa-calendar-days nav-icon"></i>Schedule</a></li>
-            <li class="list-items {current === 'Managment' ? 'active' : ''}"><a href="/dashboard/manage" on:click={() => (current = 'Managment')}><i class="fa-solid fa-users nav-icon"></i>Managment</a></li>
+            <li class="list-items {current === 'Management' ? 'active' : ''}"><a href="/dashboard/manage" on:click={() => (current = 'Management')}><i class="fa-solid fa-users nav-icon"></i>Management</a></li>
             <li class="list-items {current === 'Settings' ? 'active' : ''}"><a href="/dashboard/settings" on:click={() => (current = 'Settings')}><i class="fa-solid fa-gear nav-icon"></i>Settings</a></li>
         {/if}
     </MediaQuery>

@@ -1,5 +1,6 @@
 <svelte:head>
     <title>HumbleBeast | Profile</title>
+    <script src="https://kit.fontawesome.com/db3c0028dc.js" crossorigin="anonymous"></script>
 </svelte:head>
 
 <script>

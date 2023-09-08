@@ -102,8 +102,8 @@ let event = [];
   /* Adjust the calendar container */
 .calendar {
   width: 100%;
-  height: 70vh;
-  overflow: hidden;
+  height: 80vh;
+  overflow: auto;
   font-family: Arial, sans-serif;
   text-align: center;
   display: flex;
@@ -163,7 +163,10 @@ let event = [];
   cursor: pointer;
 }
 
-/* Style for empty cells */
+.calendar-table td:hover > .event {
+  color: white;
+}
+
 .calendar-table td:empty {
   visibility: hidden;
 }
@@ -173,7 +176,7 @@ let event = [];
   bottom: 4px;
   right: 4px;
   font-size: 0.8em;
-  color: #333;
+  color: #626060;
 }
 
 </style>
