@@ -3,7 +3,6 @@
 </svelte:head>
 <script>
     import { onMount } from 'svelte';
-    import { state } from '../../utils/store';
 
 
     let loginPage;
@@ -64,15 +63,15 @@ onMount(handleBinds);
     }
 
     const handleSignup = (email, password) => {
-        state.set('dashboard');
+        
     }
 
     const handleSignin = (email, password) => {
-        state.set('dashboard');
+        
     }
 
     const handleBack = () => {
-    state.set('front-page');
+        window.location = '/';
     }
 </script>
 

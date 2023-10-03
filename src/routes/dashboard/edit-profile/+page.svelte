@@ -1,10 +1,8 @@
 <svelte:head>
     <title>HumbleBeast | Profile</title>
-    <script src="https://kit.fontawesome.com/db3c0028dc.js" crossorigin="anonymous"></script>
 </svelte:head>
 
 <script>
-    import Nav from "../../../components/dashboard-components/nav.svelte";
     import { colors } from "../../../utils/colors";
     import { dashState } from "../../../utils/store";
     import Edit from "../../../components/dashboard-components/edit.svelte";

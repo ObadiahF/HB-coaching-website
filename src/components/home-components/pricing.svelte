@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-<script src="https://kit.fontawesome.com/db3c0028dc.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/db3c0028dc.js" crossorigin="anonymous"></script>
 </svelte:head>
 
 <div class="container">

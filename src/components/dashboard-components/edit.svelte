@@ -1,4 +1,6 @@
-
+<svelte:head>
+    <script src="https://kit.fontawesome.com/db3c0028dc.js" crossorigin="anonymous"></script>
+</svelte:head>
 <script>
     import { colors } from "../../utils/colors";
     import { dashState } from "../../utils/store";

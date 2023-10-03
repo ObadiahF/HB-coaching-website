@@ -1,7 +1,7 @@
 <script>
     import MediaQuery from '../../utils/MediaQuery.svelte'
     import { colors } from '../../utils/colors.js';
-    import { dashState } from '../../utils/store';
+    import { dashState, state } from '../../utils/store';
     import { onMount } from 'svelte';
     //reactive 'active' navBar
     let current = 'Dashboard';
@@ -31,14 +31,16 @@
     }
 
     onMount(() => {
-        let state = $dashState;
-
-        if (state[1] === 'light-mode') {
-            lightMode = true;
-        } else {
-            lightMode = false;
-        }
+        const page = getCurrentPage(window.location.href);
+        const seperated = page[0].split('');
+        seperated[0] = seperated[0].toUpperCase();
+        
+        current = seperated.join('');
     })
+
+    const getCurrentPage = (url) => {
+        return url.split('/').slice(-1);
+    }
 
 
 </script>

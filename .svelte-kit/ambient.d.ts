@@ -132,6 +132,7 @@ declare module '$env/static/private' {
 	export const npm_config_strict_ssl: string;
 	export const QT_IM_MODULE: string;
 	export const VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
+	export const npm_package_dependencies_firebase: string;
 	export const PWD: string;
 	export const npm_execpath: string;
 	export const XDG_CONFIG_DIRS: string;
@@ -280,6 +281,7 @@ declare module '$env/dynamic/private' {
 		npm_config_strict_ssl: string;
 		QT_IM_MODULE: string;
 		VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
+		npm_package_dependencies_firebase: string;
 		PWD: string;
 		npm_execpath: string;
 		XDG_CONFIG_DIRS: string;
