@@ -69,7 +69,7 @@ style="
         display: grid;
         grid-template-columns: 10% 90%;
         width: 90vw;
-        max-height: 100vh;
+        max-height: 90vh;
         overflow-y: auto;
     }
 
@@ -86,6 +86,7 @@ style="
     @media screen and (max-width: 1630px) {
         .container {
             width: 100vw;
+            min-height: 100vh;
         }
     }
 

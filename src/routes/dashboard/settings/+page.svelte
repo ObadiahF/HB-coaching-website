@@ -78,4 +78,10 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+@media (max-width: 768px) {
+        .settings-container {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
 </style>
