@@ -94,6 +94,7 @@
         align-items: center;
         flex-direction: column;
         width: 100%;
+        overflow-x: hidden;
     }
     .mobile-menu {
         display: none;

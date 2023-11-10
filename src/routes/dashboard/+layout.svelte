@@ -50,11 +50,11 @@ style="
 
     body {
         background-color: #5E6872;
-        height: 100vh;
         padding: 4.5rem 4rem;
         display: flex;
         justify-content: center;
         align-items: center;
+        max-height: 100vh;
     }
 
     * {
@@ -64,12 +64,13 @@ style="
     }
 
     .container {
-        height: 100%;
         background-color: var(--main-background);
         border-radius: 32px;
         display: grid;
         grid-template-columns: 10% 90%;
         width: 90vw;
+        max-height: 100vh;
+        overflow-y: auto;
     }
 
     @media screen and (max-width: 1650px) {
@@ -98,6 +99,11 @@ style="
     @media screen and (max-width: 511px) {
         .container {
             grid-template-columns: 30% 70%;
+            min-height: 100vh;
+        }
+
+        body {
+            background-color: #242529;
         }
     }
 </style>

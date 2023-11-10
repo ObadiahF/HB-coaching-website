@@ -246,6 +246,7 @@
     color: #ffffff;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 1rem;
 }
 
 .logout-btn:hover {

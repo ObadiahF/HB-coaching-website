@@ -30,15 +30,17 @@
 
 <div class="table-container">
     <h1>User Management</h1>
-  <div class="table-row table-header">
-    <div>Users</div>
-    <div class="plan">Plan</div>
-    <div>Actions</div>
+  <div class="table-row table-header titles">
+    <div class="titles">Users</div>
+    <div class="plan titles">Plan</div>
+    <div class="titles">Actions</div>
   </div>
   {#each users as user (user.id)}
     <div class="table-row">
-      <div>{user.name}</div>
-      <div>{user.plan}</div>
+      <div>
+        <div>{user.name}</div>
+        <div>{user.plan}</div>
+      </div>
       <div class="table-actions">
         <button on:click={() => handleButtonClick(user.id)}>View</button>
         <button on:click={() => handleButtonClick(user.id)}>Delete</button>
@@ -99,5 +101,11 @@
 
   .table-actions button:hover {
     background-color: #0056b3;
+  }
+
+  @media screen and (max-width: 510px) {
+    .titles {
+      display: none;
+    }
   }
 </style>
