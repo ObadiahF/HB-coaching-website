@@ -6,7 +6,7 @@
     //reactive 'active' navBar
     let current = 'Dashboard';
     let lightMode = false;
-
+    let pfpInput;
 
     //default colors for dark mode
     let mainBackground, color, activeColor, checkedColor, lineColor = { colors };
@@ -70,11 +70,7 @@
         <div class="profile-btn-container">
             <button on:click={() => {
                 current = ''
-                if (window.location = '/dashboard/edit-profile') {
-                    return
-                } else {
-                    window.location='/dashboard/edit-profile'
-                }
+                pfpInput.click();
             }
                 }>Edit</button>
         </div>
@@ -82,6 +78,7 @@
 
 
     <div class="nav-container">
+        <input type="file" bind:this={pfpInput} style="display: none;">
         <ul>
 
             <MediaQuery query="(max-width: 1500px)" let:matches>

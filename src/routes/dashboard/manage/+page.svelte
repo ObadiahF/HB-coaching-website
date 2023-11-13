@@ -1,4 +1,6 @@
 <script>
+      import MediaQuery from '../../../utils/MediaQuery.svelte'
+
   let users = [
     { id: 1, name: "User 1", plan: "Basic" },
     { id: 2, name: "User 2", plan: "Pro" },
@@ -37,10 +39,18 @@
   </div>
   {#each users as user (user.id)}
     <div class="table-row">
-      <div>
-        <div>{user.name}</div>
-        <div>{user.plan}</div>
-      </div>
+      <MediaQuery query="(max-width: 445px)" let:matches>
+        {#if matches}
+            <div>
+              <div>{user.name}</div>
+              <div>{user.plan}</div>
+            </div>
+            {:else}
+            <div>{user.name}</div>
+            <div>{user.plan}</div>
+        {/if}
+    </MediaQuery>
+        
       <div class="table-actions">
         <button on:click={() => handleButtonClick(user.id)}>View</button>
         <button on:click={() => handleButtonClick(user.id)}>Delete</button>
@@ -106,6 +116,14 @@
   @media screen and (max-width: 510px) {
     .titles {
       display: none;
+    }
+  }
+
+  @media screen and (max-width: 374px) {
+    .table-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
   }
 </style>
