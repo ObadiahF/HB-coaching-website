@@ -4,19 +4,202 @@
 </svelte:head>
 
 <script>
+    import { onMount } from 'svelte';
+    import Modal from './Modal.svelte';
+    let isCoach = false;
+    let showModal = false;
 
+    let event = [];
+
+    let mode = "Total"
+    let total = 600;
+    let newQuestionsNum = 0;
+    let goalsOrTags = [
+        "1Weight Lost",
+        "2Weight Lost",
+        "3Weight Lost",
+        "4Weight Lost"
+    ];
+
+    let clients = [
+        {
+            name: "Obadiah Fusco",
+            goals: [
+                "1Weight Lost",
+                "2Weight Lost",
+                "3Weight Lost",
+                "4Weight Lost"
+            ],
+            plan: 1
+        },
+        {
+            name: "da ds",
+            goals: [
+                "1da ty4",
+                "2da ty4",
+                "3da ty4",
+                "4da ty4"
+            ],
+            plan: 2
+        }
+    ]
+
+    //elements
+    let goalsInput;
+    let clientSelectionEl;
+    let questionBox;
+
+    onMount(() => {
+        if (isCoach) {
+            goalsOrTags = clients[0].goals;
+        }
+    })
+
+    const showModalData = (section) => {
+        showModal = !showModal;
+        alert(section);
+    }
+
+    //Goals functions
+    const deleteGoal = (goal) => {
+        const goalIndex = goalsOrTags.indexOf(goal);
+
+        if (goalIndex === -1) return;
+
+        goalsOrTags.splice(goalIndex, 1);
+        goalsOrTags = goalsOrTags;
+    };
+
+    const addGoal = () => {
+        const goal = goalsInput.value;
+
+        if (goal === "") return;
+
+        goalsOrTags = [...goalsOrTags, goal];
+        
+        goalsInput.value = "";
+    };
+
+    const switchClientAndGetTheirGoals = () => {
+        const clientInfo = clients[clientSelectionEl.selectedIndex];
+
+        goalsOrTags = clientInfo.goals;
+    };
+
+    //questions functions
+
+    const sendMessage = () => {
+        const message = questionBox.value;
+
+        if (message === "") return;
+
+        //send message
+
+        questionBox.value = "";
+    }
 </script>
 
 <div class="container">
     <h1 class='title'>Dashboard</h1>
     <div class="grid-container">
-      <div class="grid-item">1</div>
-      <div class="grid-item">2</div>
-      <div class="grid-item">3</div>
-      <div class="grid-item">4</div>
-      <div class="grid-item">5</div>
-      <div class="grid-item">6</div>
+      <div class="grid-item">
+        <h2>Next Meeting</h2>
+        <div class="details">
+            <h3>Aaron Kauffman at 6:00</h3>
+            <div class="btn-container">
+                <button>Join Meeting</button>
+                <button>Message Client</button>
+            </div>
+            <div>
+                <button class="disabled" on:click={(() => showModalData("Cancel"))}>Cancel Meeting</button>
+            </div>
+        </div>
+      </div>
+      <div class="grid-item">
+        {#if isCoach}
+            <h2>{mode} Gains</h2>
+            <div class="details">
+                <h3>${total}</h3>
+                <div class="btn-container">
+                    <button on:click={(() => mode = "Monthly")}>View Monthly Gains</button>
+                    <button on:click={(() => mode = "Yearly")}>View Yearly Gains</button>
+                </div>
+                <div>
+                    <button on:click={(() => mode = "Total")}>View Total Gains</button>
+                </div>
+            </div>
+        {:else}
+            <h2>Next Payment Due</h2>
+            <div class="details">
+                <h3>January 15th, 2023</h3>
+                <h2 style="display: inline-block;">Plan:</h2>
+                <h3 style="display: inline-block; color: white;">Premium</h3>
+            </div>  
+            <button on:click={(() => showModalData("Invoices"))}>Invoices</button>
+        {/if}
+        
+      </div>
+      <div class="grid-item">
+        {#if isCoach}
+            <h2>Client Goals</h2>
+            <div class="info" style="margin-top: -1rem;">
+                <h3>Select Client</h3>
+                <select name="" id="clientSelection" on:change={switchClientAndGetTheirGoals} bind:this={clientSelectionEl}>
+                    {#each clients as client}
+                        <option value={client.name}>{client.name}</option>
+                    {/each}
+                </select>
+                <ul>
+
+                    {#each goalsOrTags as goal}
+                        <li>{goal}</li>
+                    {/each}
+                </ul>
+
+                {#if goalsOrTags.length === 0}
+                    <h3>No Goals Set</h3>
+                {/if}
+            </div>
+        {:else}
+        <h2>Goals</h2>
+        <div class="info">
+            <ul>
+                    {#each goalsOrTags as goal}
+                    <li on:click={(() => deleteGoal(goal))} class="clientInfo">{goal}</li>
+                    {/each}
+                    {#if goalsOrTags.length === 0}
+                    <h3>No Goals Set</h3>
+                    {/if}
+            </ul>
+        </div>
+        <input type="text" placeholder="Add new {isCoach ? "tag" : "goal"}..." class="GoalInput" bind:this={goalsInput}>
+        <button style="padding: 0.8rem 3rem;" on:click={addGoal}>Add</button>
+        {/if}
+      </div>
+      <div class="grid-item">
+        {#if isCoach}
+             <h2>Questions</h2>
+             <div class="details">
+                <h3>New Questions: 0</h3>
+                 <div class="btn-container">
+                    <button on:click={(() => showModalData("New"))}>View New Questions</button>
+                    <button on:click={(() => showModalData("All"))}>View All Questions</button>
+                 </div>
+             </div>
+        {:else}
+             <h2>Ask Questions</h2>
+             <div class="details">
+                <textarea id="ask-question" cols="40" rows="8" bind:this={questionBox}></textarea>
+                 <div class="btn-container">
+                    <button on:click={sendMessage}>Send</button>
+                    <button on:click={(() => showModalData("Answered"))}>Answered Questions</button>
+                 </div>
+             </div>
+        {/if}
+      </div>
+
     </div>
+    <Modal bind:showModal events={event}/>
 </div>
 
 <style>
@@ -29,11 +212,12 @@
     .title {
         margin-left: 9%;
         color: white;
+        font-size: 48px;
     }
 
     .grid-container {
         display: grid;
-        grid-template-columns: repeat(3, 2fr);
+        grid-template-columns: repeat(2, 2fr);
         width: 90%;
         height: 70%;
         place-items: center;
@@ -42,8 +226,7 @@
     }
     
     .grid-item {
-        cursor: pointer;
-        background-color: #ccc;
+        background-color: #353537;
         padding: 20px;
         width: 65%;
         height: 70%;
@@ -54,15 +237,110 @@
         transition: 300ms ease;
     }
 
-    .grid-item:hover {
+    .grid-item h2 {
+        color: white;
+        margin-bottom: 2rem;
+        font-weight: bold;
+        font-size: 32px;
+    }
+
+    .grid-item h3 {
+        color: #ccd8e3;
+        font-size: 24px;
+    }
+
+    .grid-item button {
+        font-size: 18px;
+        background-color: #242529;
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 16px;
+        border: 2px solid #60606a;
+        cursor: pointer;
+        margin-bottom: 0.5rem;
+    }
+
+    .grid-item button:hover {
         transition: 300ms ease;
-    transform: translateY(-5px);
-}
+        background-color: #60606a;
+        border: 2px solid #242529;
+    }
+
+    .grid-item .details div{
+        margin-top: 1rem;
+    }
+
+    .details {
+        margin-top: 3rem;
+    }
+
+    .btn-container {
+        padding-top: 1rem;
+    }
+    .grid-item .disabled {
+        background-color: #60606a;
+        cursor: not-allowed;
+    }
+
+    .info {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        color: white;
+    }
+
+    .info ul {
+        list-style-type: decimal;
+        overflow-y: auto;
+        max-height: 8rem;
+        padding-right: 1rem;
+    }
+
+    .info ul li {
+        padding: 0.4rem;
+        font-size: 24px;
+    }
+
+    .clientInfo:hover {
+        text-decoration: line-through;
+        cursor: pointer;
+    }
+
+    .GoalInput{
+        border: none;
+        border-radius: 24px;
+        font-size: 19px;
+        width: 12rem;
+        background-color: var(--line);
+        padding: 1rem;
+        color: white;
+    }
+
 
     /* Media Query for Responsive Layout */
     @media (max-width: 768px) {
         .grid-container {
-            grid-template-columns: repeat(1, 1fr);
+            display: flex;
+            flex-direction: column;
         }
     }
+
+    @media (max-width: 1450px) {
+        .grid-item {
+            height: 90%;
+        }
+    }
+
+    #ask-question {
+        color: white;
+        background-color: #242529;
+        border: none;
+        border-radius: 8px;
+        outline: none;
+        padding: 1rem;
+        resize: none;
+
+    }
+
+   
 </style>

@@ -4,7 +4,7 @@
 
 <script>
     let promos = [
-        { 'code': 'AaronIsGay', 'promo': '15%' }
+        { 'code': 'gdsfgd', 'promo': '15%' }
     ]
 </script>
 
