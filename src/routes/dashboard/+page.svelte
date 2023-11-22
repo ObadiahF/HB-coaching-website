@@ -310,10 +310,11 @@
         border: none;
         border-radius: 24px;
         font-size: 19px;
-        width: 12rem;
+        width: 90%;
         background-color: var(--line);
         padding: 1rem;
         color: white;
+        margin-bottom: 0.5rem;
     }
 
 
@@ -339,6 +340,7 @@
         outline: none;
         padding: 1rem;
         resize: none;
+        width: 90%;
 
     }
 
