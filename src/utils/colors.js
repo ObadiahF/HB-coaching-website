@@ -5,4 +5,3 @@ export const colors = {
     'checkedColor': '#242529',
     'lineColor': '#2c2d32'
 };
-242529

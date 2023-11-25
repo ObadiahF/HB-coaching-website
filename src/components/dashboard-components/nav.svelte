@@ -42,6 +42,11 @@
         return url.split('/').slice(-1);
     }
 
+    const logOut = () => {
+        window.location = "/";
+    }
+
+
 
 </script>
 
@@ -111,7 +116,7 @@
             {/if}
             </MediaQuery>
         -->
-        <span class="logout-btn">Logout</span>
+        <span class="logout-btn" on:click={logOut}>Logout</span>
     </div>
 </div>
 

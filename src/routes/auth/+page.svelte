@@ -152,13 +152,12 @@ main {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    height: 450px;
-    min-width: 30%;
+    min-width: 50%;
     border-radius: 8px;
     transition: 500ms ease-in;
-    scale: 1.5;
     height: fit-content;
     padding: 1rem;
+    scale: 1.2;
 }
 
 form {
