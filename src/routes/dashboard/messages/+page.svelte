@@ -5,6 +5,7 @@
 
 <script>
     import User from "../../../components/dashboard-messages-comp/user.svelte";
+    import MobileUser from "../../../components/dashboard-messages-comp/mobileUser.svelte";
 
     let input;
     let inputVal;
@@ -24,6 +25,12 @@
 
         //handle message here
     };
+
+    const switchChat = (event) => {
+        const user = event.detail.user;
+
+        mobileUserSelection = false;
+    }
 </script>
 
 <div class="container">
@@ -36,7 +43,7 @@
                         <img src="https://wallpaperaccess.com/full/6295120.jpg" alt="#">
                         <span>Obadiah Fusco</span>
                     </div>
-                </div>
+        </div>
 
         <div class="messages-container">
             <div class="message sent">
@@ -80,7 +87,7 @@
         </div>
 
         {:else}
-       <User /> 
+       <MobileUser on:cardClicked = {switchChat} /> 
     {/if}
     
 
@@ -206,6 +213,9 @@
 @media screen and (max-width: 522px) {
     .mobile-menu {
         display: flex;
+    }
+
+    .container {
 
     }
 }
