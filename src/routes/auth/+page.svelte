@@ -4,6 +4,7 @@
 <script>
     import { onMount } from 'svelte';
 
+    import { signIn, signUp } from '../../utils/firebase.js';
 
     let loginPage;
     let signupPage;
@@ -43,6 +44,8 @@ onMount(handleBinds);
             //form validation for signup
             if (!(document.Signup.Email1.value.includes("@")) || !(document.Signup.Pass1.value === document.Signup.ConPass.value)) {
                 handleError(1, '');
+            } else if (document.Login.Pass.value.length < 6) {
+                handleError(1, "Password must be at least 6 characters.")
             } else {
                 handleSignup(document.Signup.Email1.value, document.Signup.Pass1.value);
 
@@ -62,11 +65,51 @@ onMount(handleBinds);
         })
     }
 
-    const handleSignup = (email, password) => {
-        
-    }
+    const handleSignup = async (email, password) => {
+        try {
+            const authInfo = await signIn(email, password);
+            console.log(authInfo);
 
-    const handleSignin = (email, password) => {
+            if (authInfo.status === 200) {
+            window.location = '/dashboard'
+        } else {
+            switch (authInfo.errorCode) {
+                case "auth/internal-error":
+                    handleError(0, "Server error, please try again later.");
+                    return;
+                case "auth/email-already-exists":
+                    handleError(0, "Email already associated with an account");
+                    return;
+            }
+            handleError(0, authInfo.errorMessage);
+        }
+        } catch {
+            handleError(0, "Error connecting to server.");
+        }
+
+    }
+    
+    const handleSignin = async (email, password) => {
+        try {
+            const authInfo = await signIn(email, password);
+            console.log(authInfo);
+
+            if (authInfo.status === 200) {
+            window.location = '/dashboard'
+        } else {
+            switch (authInfo.errorCode) {
+                case "auth/too-many-requests":
+                    handleError(0, "To many signin attempts, please try again later.");
+                    return;
+                case "auth/internal-error":
+                    handleError(0, "Server error, please try again later.");
+                    return;
+            }
+            handleError(0, authInfo.errorMessage);
+        }
+        } catch {
+            handleError(0, "Error connecting to server.");
+        }
         
     }
 
