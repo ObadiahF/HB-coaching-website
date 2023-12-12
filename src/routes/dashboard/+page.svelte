@@ -6,6 +6,9 @@
 <script>
     import { onMount } from 'svelte';
     import Modal from './Modal.svelte';
+    import { checkIfUserIsLoggedIn } from '../../utils/firebase';
+    
+
     let isCoach = false;
     let showModal = false;
 
@@ -50,6 +53,7 @@
     let questionBox;
 
     onMount(() => {
+
         if (isCoach) {
             goalsOrTags = clients[0].goals;
         }

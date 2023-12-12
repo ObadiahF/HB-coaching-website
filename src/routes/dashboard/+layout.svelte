@@ -25,6 +25,19 @@ $: {
 
 let mainBackground, color, activeColor, checkedColor, lineColor = { colors };
 
+
+
+import { onMount } from "svelte";
+import { checkIfUserIsLoggedIn } from "../../utils/firebase";
+
+let getUser;
+
+onMount(() => {
+    const getUser = checkIfUserIsLoggedIn();
+        if (!getUser) {
+            window.location = "/auth";
+        }
+})
 </script>
 
 <svelte:head>

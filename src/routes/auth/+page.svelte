@@ -38,7 +38,7 @@ onMount(handleBinds);
             if (!(document.Login.Email.value.includes("@")) || document.Login.Pass.value == "") {
                 handleError(0, '');
             } else {
-                handleSignin(document.Login.Email.value, document.Login.Pass.value)
+                handleSignin(document.Login.Email.value, document.Login.Pass.value);
             }
         } else {
             //form validation for signup
@@ -95,7 +95,7 @@ onMount(handleBinds);
             console.log(authInfo);
 
             if (authInfo.status === 200) {
-            window.location = '/dashboard'
+                window.location = '/dashboard'
         } else {
             switch (authInfo.errorCode) {
                 case "auth/too-many-requests":

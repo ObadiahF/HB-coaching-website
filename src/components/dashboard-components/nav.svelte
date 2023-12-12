@@ -3,6 +3,7 @@
     import { colors } from '../../utils/colors.js';
     import { dashState, state } from '../../utils/store';
     import { onMount } from 'svelte';
+    import { logout } from '../../utils/firebase';
     //reactive 'active' navBar
     let current = 'Dashboard';
     let lightMode = false;
@@ -43,6 +44,8 @@
     }
 
     const logOut = () => {
+        //logout(); //sign out of firebase
+        localStorage.removeItem('userData');
         window.location = "/";
     }
 
