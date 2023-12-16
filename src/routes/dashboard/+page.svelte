@@ -6,57 +6,34 @@
 <script>
     import { onMount } from 'svelte';
     import Modal from './Modal.svelte';
-    import { checkIfUserIsLoggedIn } from '../../utils/firebase';
+    import { getUserData } from '../../utils/firebase';
     
 
-    let isCoach = false;
+    let isCoach = true;
     let showModal = false;
 
     let event = [];
 
-    let mode = "Total"
     let total = 600;
     let newQuestionsNum = 0;
-    let goalsOrTags = [
-        "1Weight Lost",
-        "2Weight Lost",
-        "3Weight Lost",
-        "4Weight Lost"
-    ];
 
-    let clients = [
-        {
-            name: "Obadiah Fusco",
-            goals: [
-                "1Weight Lost",
-                "2Weight Lost",
-                "3Weight Lost",
-                "4Weight Lost"
-            ],
-            plan: 1
-        },
-        {
-            name: "da ds",
-            goals: [
-                "1da ty4",
-                "2da ty4",
-                "3da ty4",
-                "4da ty4"
-            ],
-            plan: 2
-        }
-    ]
 
     //elements
     let goalsInput;
     let clientSelectionEl;
     let questionBox;
 
-    onMount(() => {
-
-        if (isCoach) {
-            goalsOrTags = clients[0].goals;
+    onMount(async () => {
+        const data = await getUserData();
+        if (data === null) {
+            alert('Error loading data');
+            return;
         }
+
+        //show Data
+
+
+
     })
 
     const showModalData = (section) => {
@@ -121,15 +98,11 @@
       </div>
       <div class="grid-item">
         {#if isCoach}
-            <h2>{mode} Gains</h2>
+            <h2>Total Earnings</h2>
             <div class="details">
                 <h3>${total}</h3>
-                <div class="btn-container">
-                    <button on:click={(() => mode = "Monthly")}>View Monthly Gains</button>
-                    <button on:click={(() => mode = "Yearly")}>View Yearly Gains</button>
-                </div>
                 <div>
-                    <button on:click={(() => mode = "Total")}>View Total Gains</button>
+                    <button>View Total Earnings</button>
                 </div>
             </div>
         {:else}
@@ -139,10 +112,12 @@
                 <h2 style="display: inline-block;">Plan:</h2>
                 <h3 style="display: inline-block; color: white;">Premium</h3>
             </div>  
-            <button on:click={(() => showModalData("Invoices"))}>Invoices</button>
+            <button on:click={(() => showModalData("Invoices"))} class='invoice-btn'>Invoices</button>
+            <button class='invoice-btn'>Change Plan</button>
         {/if}
         
       </div>
+      <!--
       <div class="grid-item">
         {#if isCoach}
             <h2>Client Goals</h2>
@@ -202,6 +177,7 @@
         {/if}
       </div>
 
+    -->
     </div>
     <Modal bind:showModal events={event}/>
 </div>
@@ -319,6 +295,10 @@
         padding: 1rem;
         color: white;
         margin-bottom: 0.5rem;
+    }
+
+    .invoice-btn {
+        min-width: 10rem;
     }
 
 

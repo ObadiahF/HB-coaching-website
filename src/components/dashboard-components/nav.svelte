@@ -43,9 +43,8 @@
         return url.split('/').slice(-1);
     }
 
-    const logOut = () => {
-        //logout(); //sign out of firebase
-        localStorage.removeItem('userData');
+    const logOut = async () => {
+        await logout(); //sign out of firebase
         window.location = "/";
     }
 

@@ -4,6 +4,8 @@
 
 <script>
     import { scrollIntoView } from '../../utils/scrollHelper';
+    import { checkIfUserIsLoggedIn } from '../../utils/firebase.js'
+    import { onMount } from 'svelte';
 
     const scroll = (ref) => {
         let element;
@@ -27,14 +29,26 @@
     }
     //toggle menu
     let open = false;
+
+    let signedIn = false;
     
     const toggleMobileMenu = () => {
         open = !open;
     }
 
     const goToSignIn = () => {
-        window.location = 'auth'
+        if (signedIn) {
+            window.location = 'dashboard';
+        } else {
+            window.location = 'auth'
+        }
     }
+
+    onMount(() => {
+        const userData = checkIfUserIsLoggedIn();
+
+        if (userData) signedIn = true;
+    })
 </script>
 
 <div class="nav-bar">
@@ -44,7 +58,7 @@
                 <a on:click={() => {scroll('pricing')}}>pricing</a>
                 <a on:click={() => {scroll('resources')}}>resources</a>
                 <a on:click={() => {scroll('contact')}}>contact</a>
-                <button id='signIn' on:click={goToSignIn}>sign in</button>
+                <button id='signIn' on:click={goToSignIn}>{signedIn ? "dashboard" : "sign in"}</button>
             </ul>
        
         <button id='mobile' on:click={toggleMobileMenu}>

@@ -44,12 +44,11 @@ onMount(handleBinds);
             //form validation for signup
             if (!(document.Signup.Email1.value.includes("@")) || !(document.Signup.Pass1.value === document.Signup.ConPass.value)) {
                 handleError(1, '');
-            } else if (document.Login.Pass.value.length < 6) {
+            } else if (document.Signup.Pass1.value.length < 6) {
                 handleError(1, "Password must be at least 6 characters.")
             } else {
-                handleSignup(document.Signup.Email1.value, document.Signup.Pass1.value);
-
-                //createAccount            
+                //console.log('signingUp');
+                handleSignup(document.Signup.Email1.value, document.Signup.Pass1.value);        
             }
         }
     }
@@ -67,7 +66,7 @@ onMount(handleBinds);
 
     const handleSignup = async (email, password) => {
         try {
-            const authInfo = await signIn(email, password);
+            const authInfo = await signUp(email, password);
             console.log(authInfo);
 
             if (authInfo.status === 200) {
@@ -81,10 +80,11 @@ onMount(handleBinds);
                     handleError(0, "Email already associated with an account");
                     return;
             }
-            handleError(0, authInfo.errorMessage);
+            console.log(authInfo.errorMessage);
+            handleError(1, authInfo.errorMessage);
         }
         } catch {
-            handleError(0, "Error connecting to server.");
+            handleError(1, "Error connecting to server.");
         }
 
     }
