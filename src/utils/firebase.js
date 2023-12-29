@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { firebaseConfig } from "../credentials/firebase/firebaseCreds";
 import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, startAt, updateDoc, doc } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 
 // Initialize Firebase
@@ -14,10 +15,29 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth();
 const db = getFirestore(app);
+const storage = getStorage(app);
+const pfpRef = ref(storage, 'profilePictures')
 
+//cloud storage
+export const uploadPfp = (file, uid) => {
+  uploadBytes(ref(storage, `profilePictures/${uid}`), file).then((snapshot) => {
+    console.log("Uploaded filed!");
+  });
+};
 
-//Storage
+export const readPfp = async (uid) => {
+  let pfpUrl = null;
+  await getDownloadURL(ref(storage, `profilePictures/${uid}`))
+    .then((url) => {
+      pfpUrl = url
+    })
+    .catch((error) => {
+      console.log('Error: ', error);
+    })
+    return pfpUrl;
+};
 
+//firestore storage
 const setUpUserDataOnServer = async (userId) => {
   try {
     const docRef = await addDoc(collection(db, "users"), {

@@ -3,15 +3,17 @@
     import { colors } from '../../utils/colors.js';
     import { dashState, state } from '../../utils/store';
     import { onMount } from 'svelte';
-    import { logout } from '../../utils/firebase';
+    import { logout, uploadPfp, readPfp } from '../../utils/firebase';
     //reactive 'active' navBar
     let current = 'Dashboard';
     let lightMode = false;
     let pfpInput;
     let name;
+    let error = false;
+    let errorMsg = "File is to big!";
 
     export let data;
-    console.log(data);
+    let pfp;
 
     //default colors for dark mode
     let mainBackground, color, activeColor, checkedColor, lineColor = { colors };
@@ -51,7 +53,14 @@
             }
             name = "Error getting name."
         }
-    })
+    });
+
+    onMount(async () => {
+        const pfpLink = await readPfp(data.id);
+            if (pfpLink) {
+                pfp.src = pfpLink;
+            };
+    });
 
     const getCurrentPage = (url) => {
         return url.split('/').slice(-1);
@@ -62,7 +71,40 @@
         window.location = "/";
     }
 
+    const handleEditBtnClick = () => {
+        current = ''
+        pfpInput.click();
+    };
 
+    const fileSelected = () => {
+        const selectedFile = pfpInput.files[0];
+        const twoMegaBytes = 1_000_000 * 2; 
+        if (selectedFile.size > twoMegaBytes) {
+            errorMsg = 'File must be smaller than 2 Megabytes';
+            error = true;
+            return;
+        }
+
+        if (selectedFile.type.split('/')[0] !== 'image') {
+            errorMsg = 'File must be an image!';
+            error = true;
+            return;
+        }
+
+        uploadPfp(selectedFile, data.id);
+
+        if (selectedFile) {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            const dataURL = e.target.result;
+            pfp.src = dataURL;
+            error = false;
+        };
+
+        reader.readAsDataURL(selectedFile);
+    }
+    };
 
 </script>
 
@@ -83,23 +125,22 @@
 
     <div class="profile-container">
         <div class="img-container">
-            <img src="https://t3.ftcdn.net/jpg/05/47/85/88/360_F_547858830_cnWFvIG7SYsC2GLRDoojuZToysoUna4Y.jpg" alt="user">
+            <img src="https://t3.ftcdn.net/jpg/05/47/85/88/360_F_547858830_cnWFvIG7SYsC2GLRDoojuZToysoUna4Y.jpg" alt="user" bind:this={pfp}>
         </div>
         <div class="name-container">
             <h3>{name}</h3>
+            {#if error}
+            <h3 style="color: red;">{errorMsg}</h3>
+            {/if}
         </div>
         <div class="profile-btn-container">
-            <button on:click={() => {
-                current = ''
-                pfpInput.click();
-            }
-                }>Edit</button>
+            <button on:click={handleEditBtnClick}>Edit</button>
         </div>
     </div>
 
 
     <div class="nav-container">
-        <input type="file" bind:this={pfpInput} style="display: none;">
+        <input type="file" bind:this={pfpInput} on:change={fileSelected} style="display: none;" accept="image/*">
         <ul>
 
             <MediaQuery query="(max-width: 1500px)" let:matches>
@@ -175,14 +216,17 @@
     margin-bottom: 3rem;
 }
 
-.profile-container .img-container {
-    border-radius: 50%;
+.img-container {
+    width: 5rem;
     height: 5rem;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
-.profile-container .img-container img{
+.img-container img {
+    width: 100%;
     height: 100%;
-    border-radius: inherit;
+    object-fit: cover;
 }
 
 .profile-container .name-container {
