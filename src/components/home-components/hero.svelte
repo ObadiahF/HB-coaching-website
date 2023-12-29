@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="picture-container">
-        <img src="./brian.jpg" alt="Brians a cool guy" height="248px" width="341" >
+        <img src="./brian2.jpg" alt="Brians a cool guy">
     </div>
 </div>
 
@@ -58,10 +58,10 @@
     }
 
     .picture-container img {
-        width: 100%;
-        height: auto;
-        mix-blend-mode: luminosity;
+        height: 50rem;
+        /* mix-blend-mode: luminosity; */
         padding: 1rem;
+        border-radius: 5%;
     }
 
 

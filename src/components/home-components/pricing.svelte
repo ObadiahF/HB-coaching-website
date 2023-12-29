@@ -1,5 +1,27 @@
 <script>
+    import { onMount } from "svelte";
+    import { checkIfUserIsLoggedIn, getUserData } from "../../utils/firebase";
+    import { planLinks } from "../../credentials/stripe/stripeCreds.js"
+    import Spinner from "../others/spinner.svelte";
 
+    let data;
+    let isLoading = false;
+
+    const handleBtnClick = (value) => {
+        //check if user is logged in.
+        if (data.promiseResult  === null) {
+            window.location = 'auth';
+            return
+        }
+
+        const link = planLinks[value - 1];
+        window.open(link, '_blank');
+        isLoading = true;
+    };
+
+    onMount(() => {
+        data = getUserData();
+    });
 </script>
 
 <svelte:head>
@@ -7,10 +29,18 @@
 </svelte:head>
 
 <div class="container">
+    {#if isLoading}
+        <div class="loader">
+            <div class="spinner">
+                <Spinner />
+            </div>
+            <h2>Please refresh page when payment completed</h2>
+        </div>
+    {/if}
+    
     <div class="title">
         <h1>Pricing</h1>
     </div>
-
     <div class="options-container">
 
         <div class="options">
@@ -20,9 +50,9 @@
                 <li><i class="fa-solid fa-check" style="color: #ffffff;"></i>   Custom workouts</li>
                 <li><i class="fa-solid fa-check" style="color: #ffffff;"></i>   Nutrition guidance</li>
                 <li><i class="fa-solid fa-check" style="color: #ffffff;"></i>   Bi-weekly check-ins</li>
-                <li><i class="fa-solid fa-check" style="color: #ffffff;"></i>   Email support</li>
+                <li><i class="fa-solid fa-check" style="color: #ffffff;"></i>   Support</li>
             </ul>
-            <button class="call-to-action">Get Started</button>
+            <button class="call-to-action" on:click={() => handleBtnClick(1)}>Get Started</button>
         </div>
     
         <div class="options">
@@ -34,7 +64,7 @@
                 <li><i class="fa-solid fa-check" style="color: #ffffff;"></i>   Weekly check-ins</li>
                 <li><i class="fa-solid fa-check" style="color: #ffffff;"></i>   priority support</li>
             </ul>
-            <button class="call-to-action">Go Premium</button>
+            <button class="call-to-action" on:click={() => handleBtnClick(2)}>Go Premium</button>
         </div>
     
         <div class="options">
@@ -46,7 +76,7 @@
                 <li><i class="fa-solid fa-check" style="color: #ffffff;"></i>   Weekly check-ins</li>
                 <li><i class="fa-solid fa-check" style="color: #ffffff;"></i>   priority support</li>
             </ul>
-            <button class="call-to-action">Go Elite</button>
+            <button class="call-to-action" on:click={() => handleBtnClick(3)}>Go Elite</button>
         </div>
     </div>
 </div>
@@ -62,6 +92,36 @@
         box-sizing: border-box;
     }
 
+    .loader {
+  z-index: 70;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner {
+  position: absolute;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  margin-left: -9rem;
+  top: 20%;
+}
+
+    .loader h2 {
+        color: white;
+        margin-top: 25vh;
+        text-align: center;
+        padding: 1rem 2rem;
+        font-size: 32px;
+        font-weight: bold;
+    }
+    
     .title {
         padding: 0.5rem 5.5rem;
     }

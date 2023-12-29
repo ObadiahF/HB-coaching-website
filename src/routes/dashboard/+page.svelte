@@ -6,78 +6,55 @@
 <script>
     import { onMount } from 'svelte';
     import Modal from './Modal.svelte';
-    import { getUserData } from '../../utils/firebase';
     
+    export let data;
 
-    let isCoach = true;
     let showModal = false;
 
     let event = [];
+    let mode = "";
+    let plan;
+    let isCoach;
+    let total = 0;
+    let canCancle = false;
+    let canJoinMeeting = false;
+    let day = new Date();
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-    let total = 600;
-    let newQuestionsNum = 0;
+    let meetingDetails = {
+        client: "Aaron Kauffman",
+        date: daysOfWeek[day.getDay()],
+        time: "6 AM"
 
+    };
 
     //elements
     let goalsInput;
     let clientSelectionEl;
     let questionBox;
 
-    onMount(async () => {
-        const data = await getUserData();
-        if (data === null) {
-            alert('Error loading data');
-            return;
-        }
+    onMount(() => {
+        //set different numbers equals different plans
+        plan = data.planValue;
+        isCoach = data.isCoach;
+        total = data.total;
+    });
 
-        //show Data
+    const signUpOrChange = () => {
+        window.location = 'subscribe';
+    };
 
+    const showModalData = (section, event) => {
 
+        const clickedButton = event?.target;
 
-    })
+        if (clickedButton?.classList.contains('disabled')) return;
 
-    const showModalData = (section) => {
         showModal = !showModal;
-        alert(section);
+        mode = section;
     }
 
-    //Goals functions
-    const deleteGoal = (goal) => {
-        const goalIndex = goalsOrTags.indexOf(goal);
 
-        if (goalIndex === -1) return;
-
-        goalsOrTags.splice(goalIndex, 1);
-        goalsOrTags = goalsOrTags;
-    };
-
-    const addGoal = () => {
-        const goal = goalsInput.value;
-
-        if (goal === "") return;
-
-        goalsOrTags = [...goalsOrTags, goal];
-        
-        goalsInput.value = "";
-    };
-
-    const switchClientAndGetTheirGoals = () => {
-        const clientInfo = clients[clientSelectionEl.selectedIndex];
-
-        goalsOrTags = clientInfo.goals;
-    };
-
-    //questions functions
-
-    const sendMessage = () => {
-        const message = questionBox.value;
-
-        if (message === "") return;
-
-        //send message
-
-        questionBox.value = "";
-    }
 </script>
 
 <div class="container">
@@ -86,13 +63,14 @@
       <div class="grid-item">
         <h2>Next Meeting</h2>
         <div class="details">
-            <h3>Aaron Kauffman at 6:00</h3>
+            <h3>{meetingDetails.client} on {meetingDetails.date} at {meetingDetails.time}</h3>
             <div class="btn-container">
-                <button>Join Meeting</button>
-                <button>Message Client</button>
+                {#if canJoinMeeting}
+                    <button>Join Meeting</button>
+                {/if}
             </div>
             <div>
-                <button class="disabled" on:click={(() => showModalData("Cancel"))}>Cancel Meeting</button>
+                <button class={canCancle ? '' : 'disabled'} on:click={((event) => showModalData("Cancel", event))}>Cancel Meeting</button>
             </div>
         </div>
       </div>
@@ -106,14 +84,16 @@
                 </div>
             </div>
         {:else}
-            <h2>Next Payment Due</h2>
+            <h2>Monthy Plan Details</h2>
             <div class="details">
-                <h3>January 15th, 2023</h3>
-                <h2 style="display: inline-block;">Plan:</h2>
-                <h3 style="display: inline-block; color: white;">Premium</h3>
+                <h3>{plan === null ? "" : "Plan:"}</h3>
+                <h2 style="display: inline-block;">{plan === null ? "" : "Plan:"}</h2>
+                <h3 style="display: inline-block; color: white;">{plan === null ? "No plan currently" : "Premium"}</h3>
             </div>  
-            <button on:click={(() => showModalData("Invoices"))} class='invoice-btn'>Invoices</button>
-            <button class='invoice-btn'>Change Plan</button>
+            {#if plan !== null}
+                <button on:click={(() => showModalData("Invoices"))} class='invoice-btn'>Invoices</button>
+            {/if}
+            <button class='invoice-btn' on:click={signUpOrChange}>{plan === null ? "Sign Up!" : "Change Plan"}</button>
         {/if}
         
       </div>
@@ -179,7 +159,7 @@
 
     -->
     </div>
-    <Modal bind:showModal events={event}/>
+    <Modal bind:showModal events={event} data={data} mode={mode}/>
 </div>
 
 <style>

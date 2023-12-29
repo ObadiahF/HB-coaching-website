@@ -4,7 +4,7 @@
 <script>
     import { onMount } from 'svelte';
 
-    import { signIn, signUp } from '../../utils/firebase.js';
+    import { signIn, signUp, checkIfUserIsLoggedIn } from '../../utils/firebase.js';
 
     let loginPage;
     let signupPage;
@@ -18,7 +18,11 @@ const handleBinds = () => {
 }
 
 onMount(handleBinds);
+onMount(() => {
+    const user = checkIfUserIsLoggedIn();
 
+    if (user) window.location = "dashboard";
+});
     //switch pages
     const switchToSignUp = () => {
         loginPage.style.display = "none";

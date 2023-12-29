@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { firebaseConfig } from "../credentials/firebase/firebaseCreds";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, startAt } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, startAt, updateDoc, doc } from 'firebase/firestore';
 
 
 // Initialize Firebase
@@ -39,14 +39,18 @@ const setUpUserDataOnServer = async (userId) => {
 export const getUserData = async () => {
   try {
     const cookie = Cookies.get('userData');
-    console.log(cookie);
     const { uid } = await JSON.parse(cookie);
+    if (!uid) {
+      return null;
+    }
 
     // Create a query
     const q = query(collection(db, 'users'), orderBy('id'), startAt(uid), limit(1));
 
+    //issue with the line below;
     // Execute the query
     const querySnapshot = await getDocs(q);
+   
 
     // Check if there are any documents
     if (!querySnapshot.empty) {
@@ -59,13 +63,52 @@ export const getUserData = async () => {
     }
 
 
+
+
   } catch (e) {
     console.error(e);
     return null;
   }
 };
 
-getUserData();
+export const updateFullNameOnServer = async (newName) => {
+  try {
+    const cookie = Cookies.get('userData');
+    const { uid } = await JSON.parse(cookie);
+
+    if (!uid) return;
+
+    // Create a query
+    const q = query(collection(db, 'users'), orderBy('id'), startAt(uid), limit(1));
+
+    // Execute the query
+    const querySnapshot = await getDocs(q);
+
+    // Check if there are any documents
+    if (!querySnapshot.empty) {
+      // Access the first document
+      const docId = querySnapshot.docs[0].id;
+
+      // Get a DocumentReference using the document ID
+      const docRef = doc(db, 'users', docId);
+
+      // Use updateDoc with the DocumentReference
+      await updateDoc(docRef, {
+        fullName: newName
+      });
+
+      console.log('name set!');
+      localStorage.setItem('name', newName);
+      window.reload();
+    } else {
+      console.log('error fetching data');
+    }
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+};
+
 
 export const getMessages = (coachId, clientId) => {
   

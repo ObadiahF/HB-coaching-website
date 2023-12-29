@@ -8,6 +8,10 @@
     let current = 'Dashboard';
     let lightMode = false;
     let pfpInput;
+    let name;
+
+    export let data;
+    console.log(data);
 
     //default colors for dark mode
     let mainBackground, color, activeColor, checkedColor, lineColor = { colors };
@@ -37,6 +41,16 @@
         seperated[0] = seperated[0].toUpperCase();
         
         current = seperated.join('');
+
+        name = localStorage.getItem('name');
+        if (!name) {
+            const nameFromServer = data.fullName;
+            if (nameFromServer) {
+                name = nameFromServer;
+                return;
+            }
+            name = "Error getting name."
+        }
     })
 
     const getCurrentPage = (url) => {
@@ -72,7 +86,7 @@
             <img src="https://t3.ftcdn.net/jpg/05/47/85/88/360_F_547858830_cnWFvIG7SYsC2GLRDoojuZToysoUna4Y.jpg" alt="user">
         </div>
         <div class="name-container">
-            <h3>Brian Kim</h3>
+            <h3>{name}</h3>
         </div>
         <div class="profile-btn-container">
             <button on:click={() => {
@@ -93,13 +107,18 @@
             <li class="list-items {current === 'Dashboard' ? 'active' : ''}"><a href="/dashboard" on:click={() => (current = 'Dashboard')}><i class="fa-solid fa-grip-vertical nav-icon"></i></a></li>
             <li class="list-items {current === 'Messages' ? 'active' : ''}"><a href="/dashboard/messages" on:click={() => (current = 'Messages')}><i class="fa-solid fa-envelope nav-icon"></i></a></li>
             <li class="list-items {current === 'Schedule' ? 'active' : ''}"><a href="/dashboard/schedule" on:click={() => (current = 'Schedule')}><i class="fa-regular fa-calendar-days nav-icon"></i></a></li>
+            
             <li class="list-items {current === 'Management' ? 'active' : ''}"><a href="/dashboard/manage" on:click={() => (current = 'Management')}><i class="fa-solid fa-users nav-icon"></i></a></li>
+            {#if data.isCoach === true}
             <li class="list-items {current === 'Settings' ? 'active' : ''}"><a href="/dashboard/settings" on:click={() => (current = 'Settings')}><i class="fa-solid fa-gear nav-icon"></i></a></li>
+            {/if}
             {:else}
             <li class="list-items {current === 'Dashboard' ? 'active' : ''}"><a href="/dashboard" on:click={() => (current = 'Dashboard')}><i class="fa-solid fa-grip-vertical nav-icon"></i>Dashboard</a></li>
             <li class="list-items {current === 'Messages' ? 'active' : ''}"><a href="/dashboard/messages" on:click={() => (current = 'Messages')}><i class="fa-solid fa-envelope nav-icon"></i>Messages</a></li>
             <li class="list-items {current === 'Schedule' ? 'active' : ''}"><a href="/dashboard/schedule" on:click={() => (current = 'Schedule')}><i class="fa-regular fa-calendar-days nav-icon"></i>Schedule</a></li>
+            {#if data.isCoach === true}
             <li class="list-items {current === 'Management' ? 'active' : ''}"><a href="/dashboard/manage" on:click={() => (current = 'Management')}><i class="fa-solid fa-users nav-icon"></i>Management</a></li>
+            {/if}
             <li class="list-items {current === 'Settings' ? 'active' : ''}"><a href="/dashboard/settings" on:click={() => (current = 'Settings')}><i class="fa-solid fa-gear nav-icon"></i>Settings</a></li>
         {/if}
     </MediaQuery>

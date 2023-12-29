@@ -1,8 +1,19 @@
 
+<script>
+  const handleGoBack = () => {
+    if (window.location = '/error') {
+      window.history.go(-2);
+    } else {
+      window.history.back();
+    }
+    
+  }
+</script>
+
 <div class="container">
   <span class="icon">❌</span>
   <p class="message">Oops! The page you're looking for doesn't exist.</p>
-  <button class="back-button" on:click={() => window.history.back()}>Go Back</button>
+  <button class="back-button" on:click={handleGoBack}>Go Back</button>
 </div>
 
     <style>

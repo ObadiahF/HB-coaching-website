@@ -1,5 +1,9 @@
 <script>
+    import { onMount } from 'svelte';
       import MediaQuery from '../../../utils/MediaQuery.svelte'
+      import { getUserData } from '../../../utils/firebase';
+
+      export let userData;
 
   let users = [
     { id: 1, name: "User 1", plan: "Basic" },
@@ -24,6 +28,18 @@
   function handleButtonClick(userId) {
     alert(`Button clicked for User ${userId}`);
   }
+
+  let plan = null;
+  let name = "";
+
+  let isCoach;
+
+  onMount( () => {
+    isCoach = userData.isCoach;
+      if (!isCoach) {
+        window.location = '/error';
+      }
+    })
 </script>
 
 <svelte:head>

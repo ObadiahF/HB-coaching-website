@@ -4,6 +4,13 @@
     import { colors } from "../../utils/colors";
     import { dashState } from "../../utils/store";
 let state;
+let name;
+let isCoach;
+let plan;
+let userData = {};
+
+export let data;
+
 
 $: {
     state = $dashState;
@@ -33,11 +40,10 @@ import { checkIfUserIsLoggedIn } from "../../utils/firebase";
 let getUser;
 
 onMount(() => {
-    const getUser = checkIfUserIsLoggedIn();
-        if (!getUser) {
-            window.location = "/auth";
-        }
-})
+    if (JSON.stringify(data) === '{}') {
+        window.location = '/auth';
+    }
+});
 </script>
 
 <svelte:head>
@@ -53,7 +59,7 @@ style="
     --line: {lineColor};
 ">
     <div class="container">
-        <Nav/>
+        <Nav data={data}/>
         <slot />
     </div>
     
