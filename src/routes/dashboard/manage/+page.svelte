@@ -1,9 +1,8 @@
 <script>
     import { onMount } from 'svelte';
       import MediaQuery from '../../../utils/MediaQuery.svelte'
-      import { getUserData } from '../../../utils/firebase';
 
-      export let userData;
+      export let data;
 
   let users = [
     { id: 1, name: "User 1", plan: "Basic" },
@@ -35,7 +34,8 @@
   let isCoach;
 
   onMount( () => {
-    isCoach = userData.isCoach;
+    console.log(data);
+    isCoach = data.isCoach;
       if (!isCoach) {
         window.location = '/error';
       }

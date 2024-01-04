@@ -15,7 +15,6 @@
     let mode = "";
     let plan;
     let isCoach;
-    let total = 0;
     let canCancle = false;
     let canJoinMeeting = false;
     let day = new Date();
@@ -37,7 +36,11 @@
         //set different numbers equals different plans
         plan = data.planValue;
         isCoach = data.isCoach;
-        total = data.total;
+        const name = data.fullName;
+        
+        if (!name) {
+            showModalData("name");
+        }
     });
 
     const signUpOrChange = () => {
@@ -54,6 +57,10 @@
         mode = section;
     }
 
+    const sendToNewWindow = (link) => {
+        window.open(link, "_blank");
+    };
+
 
 </script>
 
@@ -68,6 +75,7 @@
                 {#if canJoinMeeting}
                     <button>Join Meeting</button>
                 {/if}
+                <button on:click={() => sendToNewWindow('https://calendly.com/app/availability/schedules')}>Set Availability</button>
             </div>
             <div>
                 <button class={canCancle ? '' : 'disabled'} on:click={((event) => showModalData("Cancel", event))}>Cancel Meeting</button>
@@ -78,9 +86,8 @@
         {#if isCoach}
             <h2>Total Earnings</h2>
             <div class="details">
-                <h3>${total}</h3>
                 <div>
-                    <button>View Total Earnings</button>
+                    <button on:click={() => sendToNewWindow("https://dashboard.stripe.com/test/balance/overview")}>View Total Earnings</button>
                 </div>
             </div>
         {:else}

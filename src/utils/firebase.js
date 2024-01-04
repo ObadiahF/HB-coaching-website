@@ -18,6 +18,7 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 const pfpRef = ref(storage, 'profilePictures')
 
+
 //cloud storage
 export const uploadPfp = (file, uid) => {
   uploadBytes(ref(storage, `profilePictures/${uid}`), file).then((snapshot) => {
@@ -130,9 +131,7 @@ export const updateFullNameOnServer = async (newName) => {
 };
 
 
-export const getMessages = (coachId, clientId) => {
-  
-}
+
 
 
 //AUTH
